@@ -1,0 +1,50 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "John Smith",
+      "salary": 100000,
+      "title": "Software Engineer",
+      "locationId": 1,
+      "teamId": 1
+    },
+    {
+      "id": 2,
+      "name": "Sara Jane",
+      "salary": 110000,
+      "title": "Manager",
+      "locationId": 1,
+      "teamId": 1
+    },
+    {
+      "id": 3,
+      "name": "Alan Jones",
+      "salary": 80000,
+      "title": "Software Engineer",
+      "locationId": 1,
+      "teamId": 1
+    },
+    {
+      "id": 4,
+      "name": "Kevin Stevenson",
+      "salary": 60000,
+      "title": "QA Engineer",
+      "locationId": 1,
+      "teamId": 1
+    }
+  ],
+  "locations": [
+    {
+      "id": 1,
+      "city": "Normal",
+      "state": "Indiana",
+      "address": "123 Nowhere Dr"
+    }
+  ],
+  "teams": [
+    {
+      "id": 1,
+      "name": "Express Yourself"
+    }
+  ]
+}
