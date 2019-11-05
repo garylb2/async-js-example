@@ -1,0 +1,32 @@
+{
+  "name": "async-js-examples",
+  "version": "0.0.1",
+  "description": "example of Async Javascript for consuming API data",
+  "main": "cli.js",
+  "bin": "cli.js",
+  "scripts": {
+    "test": "node node_modules/jasmine/bin/jasmine"
+  },
+  "engines": {
+    "node": ">= 10.12"
+  },
+  "engineStrict": true,
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.4.0",
+    "mock-require": "^3.0.3"
+  },
+  "dependencies": {
+    "async": "^2.6.2",
+    "command-line-args": "^5.1.1",
+    "command-line-usage": "^5.0.5",
+    "dateformat": "^3.0.3",
+    "https": "^1.0.0",
+    "json2csv": "^4.5.1",
+    "loglevel": "^1.6.3",
+    "loglevel-std-streams": "^2.0.1",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
+  }
+}
