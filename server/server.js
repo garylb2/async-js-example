@@ -4,6 +4,8 @@ let express = require('express'),
 const port = process.env.PORT || 3000;
 const controllers = require('./controllers');
 
+app.use((req,res,next) => {setTimeout(next,100)});
+
 app.route('/employees')
   .get(controllers.get_all_employees);
 

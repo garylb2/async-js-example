@@ -88,6 +88,9 @@ const getTeamObj = async () => {
 
 exports.getReport = async () => {
 
+  const timeKey = 'Team Salary Report';
+  console.time(timeKey);
+
   const employeesData = await getAllEmployees();
 
   const teamsObj = await getTeamObj();
@@ -109,6 +112,7 @@ exports.getReport = async () => {
     return accumulator;
   });
 
+  console.timeEnd(timeKey);
 
   console.log(teamSalaries);
 }
