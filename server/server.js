@@ -7,19 +7,19 @@ const controllers = require('./controllers');
 app.route('/employees')
   .get(controllers.get_all_employees);
 
-app.route('/employee/:employeeId')
+app.route('/employee/:id')
   .get(controllers.get_employee);
 
 app.route('/locations')
   .get(controllers.get_all_locations);
 
-app.route('/location/:locationId')
+app.route('/location/:id')
   .get(controllers.get_location);
 
 app.route('/teams')
   .get(controllers.get_all_teams);
 
-app.route('/team/:teamId')
+app.route('/team/:id')
   .get(controllers.get_team);
 
 app.listen(port);
