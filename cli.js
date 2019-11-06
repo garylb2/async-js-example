@@ -35,7 +35,11 @@ if (cmdLineOptions.help) {
 } else if(cmdLineOptions.server) {
   const server = require('./server/server');
 } else if(typeof cmdLineOptions.report !== "undefined") {
-  const report = require('./examples/salaryByTeam');
+  try{
+    const report = require(`./examples/${cmdLineOptions.report}`);
+  } catch (e) {
+    console.error(`Invalid Report Type: ${cmdLineOptions.report}`);
+  }
 } else {
   console.log(usage);
 }

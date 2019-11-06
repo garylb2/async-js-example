@@ -7,9 +7,13 @@ const util = require('util');
 const concatLimit = util.promisify(_async.concatLimit);
 
 const serverUrl = "http://localhost:3000";
+const concurrency = 3;
+
+let numOfCalls = 0;
 
 const retryableRequestGet = async function(options) {
     // logger.trace('retryableRequestGet options', options);
+    ++numOfCalls;
     return rp({...options,resolveWithFullResponse: true})
         .then(response => {
             // throw Exception when non-success response
@@ -46,7 +50,7 @@ const getAllEmployees = async () => {
   }
 
   const rawEmployeesData = await retryableRequestGet(urlOptions);
-  const concatData = await concatLimit(rawEmployeesData.body, 3, getEmployeeData);
+  const concatData = await concatLimit(rawEmployeesData.body, concurrency, getEmployeeData);
 
   return concatData;
 };
@@ -69,7 +73,7 @@ const getAllTeams = async () => {
   }
 
   const rawTeamsData = await retryableRequestGet(urlOptions);
-  const concatData = await concatLimit(rawTeamsData.body, 3, getTeamData);
+  const concatData = await concatLimit(rawTeamsData.body, concurrency, getTeamData);
 
   return concatData;
 };
@@ -88,6 +92,7 @@ const getTeamObj = async () => {
 
 exports.getReport = async () => {
 
+  numOfCalls = 0;
   const timeKey = 'Team Salary Report';
   console.time(timeKey);
 
@@ -113,6 +118,7 @@ exports.getReport = async () => {
   });
 
   console.timeEnd(timeKey);
+  console.log(`# of API calls: ${numOfCalls}`);
 
   console.log(teamSalaries);
 }
