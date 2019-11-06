@@ -51,9 +51,46 @@ const getAllEmployees = async () => {
   return concatData;
 };
 
+const getTeamData = async (teamData) => {
+  const urlOptions = {
+    url: `${serverUrl}/team/${teamData.id}`,
+    json: true
+  }
+
+  const rawTeamData = await retryableRequestGet(urlOptions);
+
+  return rawTeamData.body;
+};
+
+const getAllTeams = async () => {
+  const urlOptions = {
+    url: `${serverUrl}/teams`,
+    json: true
+  }
+
+  const rawTeamsData = await retryableRequestGet(urlOptions);
+  const concatData = await concatLimit(rawTeamsData.body, 3, getTeamData);
+
+  return concatData;
+};
+
+const getTeamObj = async () => {
+  const teamsData = await getAllTeams();
+
+  const teamsObj = {};
+  teamsData.forEach((item) => {
+    const teamKey = `team${item.id}`;
+    teamsObj[teamKey] = item;
+  });
+
+  return teamsObj;
+};
+
 exports.getReport = async () => {
 
   const employeesData = await getAllEmployees();
+
+  const teamsObj = await getTeamObj();
 
   let teamSalaries = employeesData.reduce((accumulator, item) => {
     if (accumulator.hasOwnProperty('id')) {
@@ -62,12 +99,13 @@ exports.getReport = async () => {
 
     const teamId = item.teamId;
     const teamKey = `team${teamId}`;
+    const teamName = teamsObj[teamKey].name;
 
-    if (!accumulator.hasOwnProperty(teamKey)) {
-      accumulator[teamKey] = 0;
+    if (!accumulator.hasOwnProperty(teamName)) {
+      accumulator[teamName] = 0;
     }
 
-    accumulator[teamKey] += item.salary;
+    accumulator[teamName] += item.salary;
     return accumulator;
   });
 

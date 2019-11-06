@@ -9,6 +9,18 @@ const optionDefinitions = [
       type: Boolean,
       description: "Display this usage guide."
     },
+    {
+      name: "server",
+      alias: "s",
+      type: Boolean,
+      description: "Run sample REST server"
+    },
+    {
+      name: "report",
+      alias: "r",
+      type: String,
+      description: "Desired Report to generate"
+    }
   ];
 const cmdLineOptions = commandLineArgs(optionDefinitions);
 const usage = commandLineUsage([
@@ -19,5 +31,11 @@ const usage = commandLineUsage([
 ]);
 
 if (cmdLineOptions.help) {
+  console.log(usage);
+} else if(cmdLineOptions.server) {
+  const server = require('./server/server');
+} else if(typeof cmdLineOptions.report !== "undefined") {
+  const report = require('./examples/salaryByTeam');
+} else {
   console.log(usage);
 }
