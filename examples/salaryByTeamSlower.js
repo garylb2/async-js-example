@@ -96,13 +96,9 @@ exports.getReport = async () => {
   const timeKey = 'Team Salary Report';
   console.time(timeKey);
 
-  // make all async calls as overlapping as possible
-  let employeesData = getAllEmployees();
-  let teamsObj = getTeamObj();
-
-  // wait for all
-  employeesData = await employeesData;
-  teamsObj = await teamsObj;
+  // wait for each block of data separately
+  const employeesData = await getAllEmployees();
+  const teamsObj = await getTeamObj();
 
   // reduce all of the employee data down to a report object
   let teamSalaries = employeesData.reduce((accumulator, item) => {
