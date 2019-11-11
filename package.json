@@ -27,6 +27,7 @@
     "json2csv": "^4.5.1",
     "loglevel": "^1.6.3",
     "loglevel-std-streams": "^2.0.1",
+    "p-limit": "^2.2.1",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "sync-request": "^6.1.0"
