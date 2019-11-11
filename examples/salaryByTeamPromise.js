@@ -8,6 +8,7 @@ const pLimit = require('p-limit');
 
 let numOfCalls = 0;
 
+// uses p-limit library to limit concurrency of promises
 const _accumulateLimit = (coll, concurrency, promiseFunc) => {
 
   const promiseResponse = new Promise((resolve, reject) => {
