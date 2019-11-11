@@ -5,7 +5,7 @@ const serverUrl = "http://localhost:3000";
 let numOfCalls = 0;
 
 const requestGet = function(options) {
-    // logger.trace('retryableRequestGet options', options);
+    // console.log('retryableRequestGet options', options);
     ++numOfCalls;
     const res = request('GET', options.url);
     return res.getBody('utf8');

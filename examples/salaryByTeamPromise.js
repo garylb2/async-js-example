@@ -31,7 +31,7 @@ const _accumulateLimit = (coll, concurrency, promiseFunc) => {
 
 // returns a promise
 const retryableRequestGet = function(options) {
-    // logger.trace('retryableRequestGet options', options);
+    // console.log('retryableRequestGet options', options);
     ++numOfCalls;
     return rp({...options,resolveWithFullResponse: true})
         .then(response => {
@@ -46,7 +46,7 @@ const retryableRequestGet = function(options) {
 
             // otherwise just return
             const ret = {statusCode: response.statusCode, body: response.body};
-            // logger.trace('retryableRequestGet simplified response', ret);
+            // console.log('retryableRequestGet simplified response', ret);
             return ret;
         })
 };

@@ -12,7 +12,7 @@ const concurrency = 3;
 let numOfCalls = 0;
 
 const retryableRequestGet = async function(options) {
-    // logger.trace('retryableRequestGet options', options);
+    // console.log('retryableRequestGet options', options);
     ++numOfCalls;
     return rp({...options,resolveWithFullResponse: true})
         .then(response => {
@@ -27,7 +27,7 @@ const retryableRequestGet = async function(options) {
 
             // otherwise just return
             const ret = {statusCode: response.statusCode, body: response.body};
-            // logger.trace('retryableRequestGet simplified response', ret);
+            // console.log('retryableRequestGet simplified response', ret);
             return ret;
         })
 };
