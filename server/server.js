@@ -4,28 +4,19 @@ let api = express();
 
 const rateLimit = require("express-rate-limit");
 const port = process.env.PORT || 3000;
-const controllers = require('./controllers');
+const routes = require('./routes');
+const swaggerUi = require('./swaggerUi');
 
+// setup the SwaggerUi Interface
+swaggerUi.setup(app);
+
+// add an artificial delay
 api.use((req,res,next) => {setTimeout(next,100)});
 
-api.route('/employees')
-  .get(controllers.get_all_employees);
+// setup base routes
+routes.setup(api);
 
-api.route('/employee/:id')
-  .get(controllers.get_employee);
-
-api.route('/locations')
-  .get(controllers.get_all_locations);
-
-api.route('/location/:id')
-  .get(controllers.get_location);
-
-api.route('/teams')
-  .get(controllers.get_all_teams);
-
-api.route('/team/:id')
-  .get(controllers.get_team);
-
+// add root lvl routes
 app.use('', api);
 
 const limiter = rateLimit({
