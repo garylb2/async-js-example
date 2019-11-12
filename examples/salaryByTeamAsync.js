@@ -9,6 +9,8 @@ const concatLimit = util.promisify(_async.concatLimit);
 const serverUrl = "http://localhost:3000";
 const concurrency = 3;
 
+const salaryReport = require('./reports/teamSalaries');
+
 let numOfCalls = 0;
 
 const retryableRequestGet = async function(options) {
@@ -104,23 +106,8 @@ exports.getReport = async () => {
   employeesData = await employeesData;
   teamsObj = await teamsObj;
 
-  // reduce all of the employee data down to a report object
-  let teamSalaries = employeesData.reduce((accumulator, item) => {
-    if (accumulator.hasOwnProperty('id')) {
-      accumulator = {};
-    }
-
-    const teamId = item.teamId;
-    const teamKey = `team${teamId}`;
-    const teamName = teamsObj[teamKey].name;
-
-    if (!accumulator.hasOwnProperty(teamName)) {
-      accumulator[teamName] = 0;
-    }
-
-    accumulator[teamName] += item.salary;
-    return accumulator;
-  });
+  // generate report
+  const teamSalaries = salaryReport.report(employeesData, teamsObj);
 
   console.timeEnd(timeKey);
   console.log(`# of API calls: ${numOfCalls}`);

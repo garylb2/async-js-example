@@ -4,6 +4,8 @@ const serverUrl = "http://localhost:3000";
 
 let numOfCalls = 0;
 
+const salaryReport = require('./reports/teamSalaries');
+
 const requestGet = function(options) {
     // console.log('retryableRequestGet options', options);
     ++numOfCalls;
@@ -86,26 +88,13 @@ exports.getReport = () => {
   const timeKey = 'Team Salary Report';
   console.time(timeKey);
 
+  // synchronously collect all employee data
   const employeesData = getAllEmployees();
-
+  // synchronously collect all team data
   const teamsObj = getTeamObj();
 
-  let teamSalaries = employeesData.reduce((accumulator, item) => {
-    if (accumulator.hasOwnProperty('id')) {
-      accumulator = {};
-    }
-
-    const teamId = item.teamId;
-    const teamKey = `team${teamId}`;
-    const teamName = teamsObj[teamKey].name;
-
-    if (!accumulator.hasOwnProperty(teamName)) {
-      accumulator[teamName] = 0;
-    }
-
-    accumulator[teamName] += item.salary;
-    return accumulator;
-  });
+  // generate report
+  const teamSalaries = salaryReport.report(employeesData, teamsObj);
 
   console.timeEnd(timeKey);
   console.log(`# of API calls: ${numOfCalls}`);

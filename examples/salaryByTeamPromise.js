@@ -6,6 +6,8 @@ const serverUrl = "http://localhost:3000";
 const concurrency = 3;
 const pLimit = require('p-limit');
 
+const salaryReport = require('./reports/teamSalaries');
+
 let numOfCalls = 0;
 
 // uses p-limit library to limit concurrency of promises
@@ -152,23 +154,8 @@ exports.getReport = () => {
       const employeesData = results[0];
       const teamsObj = results[1];
 
-      // console.log(results);
-      let teamSalaries = employeesData.reduce((accumulator, item) => {
-        if (accumulator.hasOwnProperty('id')) {
-          accumulator = {};
-        }
-
-        const teamId = item.teamId;
-        const teamKey = `team${teamId}`;
-        const teamName = teamsObj[teamKey].name;
-
-        if (!accumulator.hasOwnProperty(teamName)) {
-          accumulator[teamName] = 0;
-        }
-
-        accumulator[teamName] += item.salary;
-        return accumulator;
-      });
+      // generate report
+      const teamSalaries = salaryReport.report(employeesData, teamsObj);
 
       console.timeEnd(timeKey);
       console.log(`# of API calls: ${numOfCalls}`);
