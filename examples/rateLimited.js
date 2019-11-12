@@ -56,12 +56,10 @@ const retryableRequestGet = async function(options) {
 
 const get = async (options) => {
 
-    const boundGet = retryableRequestGet.bind(null, options);
+    const boundGet = async () => retryableRequestGet(options);
 
     try {
-        const ret = await retry(retryHandlers,
-            boundGet
-        );
+        const ret = await retry(retryHandlers,boundGet);
 
         return ret;
     } catch(e) {
