@@ -72,16 +72,16 @@ const util = require('util');
 const fs = require('fs');
 const readFile = util.promisify(fs.readFile);
 
-async printContentHelper(fileName) => {
+const printContentHelper = async (fileName) => {
   try {
     const contents = await readFile(fileName);
     console.log(`${fileName} -- ${contents}`);
   } catch(err) {
     console.error(`Error reading ${fileName}: ${err}`);
   }
-}
+};
 
-async printContents(rootFileName) => {
+const printContents = async(rootFileName) => {
   try{
     const fileResults = await readFile();
 
@@ -94,7 +94,7 @@ async printContents(rootFileName) => {
   } catch(err) {
     console.error(`Read File Error: ${err}`);
   }
-}
+};
 
 printContents('./context.json');
 ```
