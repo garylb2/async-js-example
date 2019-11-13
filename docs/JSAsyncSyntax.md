@@ -31,8 +31,67 @@ A Promise is a wrapper/proxy object, around a segment of asynchronous code, whic
 ### Limitations
 The main limitation of the ES6 Promise, in my opinion, is readability.  Most implementations require anonymous callback functions inside of the Promise declaration, which is very different from synchronous code.  It can be difficult to follow the flow of control through all of the Monads, and depending how the handlers are attached to the Promise, you can have [unexpected behavior](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then#Chaining).
 
+### Example
+Fire and forget chained file reads/prints
+```javascript 1.6
+const util = require('util');
+const fs = require('fs');
+const readFile = util.promisify(fs.readFile);
+
+readFile('./context.json').then((results) => {
+        console.debug(results);
+        const data = JSON.parse(results);
+
+        for (const fName in data) {
+          readFile(fName).then(fContents => {
+            console.log(`${fName} -- ${fContents}`);
+          }, fErr => {
+            console.error(`Error reading ${fName}: ${fErr}`);
+          });
+        }
+    },
+    (err) => {
+        console.error(`Read File Error: ${err}`);
+    }
+);
+```
+
 ### Warning
 Given the length of time required before browsers & Node.js implemented the ES6 standard, a number of independent developers created their own solution to avoid the **Callback Hell**.  Libraries, such as Blackbird Promises, have significant differences from the standardized Promise objects and are generally not compatible with the newer standard.
 
 ## async/await
 The latest asynchronous pattern in JavaScript & Node.js is the _async/await_ keywords.  Supported in Node.js as of _v7.6.0_.  Using the _async_ keyword before a function definition translates that Function into an [AsyncFunction](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction) which provides an implicit Promise return value, wrapping any explicit return in said Promise.
+
+### Example
+Fire and forget chained file reads/prints
+```javascript 1.6
+const util = require('util');
+const fs = require('fs');
+const readFile = util.promisify(fs.readFile);
+
+async printContentHelper(fileName) => {
+  try {
+    const contents = await readFile(fileName);
+    console.log(`${fileName} -- ${contents}`);
+  } catch(err) {
+    console.error(`Error reading ${fileName}: ${err}`);
+  }
+}
+
+async printContents(rootFileName) => {
+  try{
+    const fileResults = await readFile();
+
+    console.debug(fileResults);
+    const data = JSON.parse(fileResults);
+
+    for (const fName in data) {
+      printContentHelper(fName);
+    }
+  } catch(err) {
+    console.error(`Read File Error: ${err}`);
+  }
+}
+
+printContents('./context.json');
+```
