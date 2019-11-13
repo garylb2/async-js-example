@@ -103,5 +103,5 @@ printContents('./context.json');
 
 ##### Footnotes
 ###### Monad Design Pattern
-Fundamentally a Monad is an object that has methods which return an object with the same interface as the original Monad, but with a mutated internal state.
-One major JS example being jQuery objects.
+> Fundamentally a Monad is an object that has methods which return an object with the same interface as the original Monad, but with a mutated internal state.
+> One major JS example of at least a partial Monad is [jQuery Objects](https://api.jquery.com/jQuery/#jQuery1).
