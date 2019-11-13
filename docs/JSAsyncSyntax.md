@@ -1,6 +1,7 @@
 # JavaScript Async Syntax/Patterns
 
 Over the course of the history of JavaScript, there have been three major methods of consuming the results of asynchronous code.
+_N.B.: Node.js and every other JS interpreter is single-threaded, and all asynchronous behavior is done with context switching of the single thread._
 
 ## CallBacks
 The oldest, most venerable method of handling asynchronous behavior in Javascript is the usage of callbacks.  A callback function reference is passed as a parameter to another function that initiates the asynchronous operation and which invokes the callback function with expected result parameters (usually _(err, result)_).
@@ -61,6 +62,8 @@ Given the length of time required before browsers & Node.js implemented the ES6 
 
 ## async/await
 The latest asynchronous pattern in JavaScript & Node.js is the _async/await_ keywords.  Supported in Node.js as of _v7.6.0_.  Using the _async_ keyword before a function definition translates that Function into an [AsyncFunction](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction) which provides an implicit Promise return value, wrapping any explicit return in said Promise.
+
+Inside of an AsyncFunction, you can use the _await_ keyword to cause the local execution to block until the awaited code returns a result.  You can then treat the asynchronous operation as if it were synchronous within the confines of AsyncFunction, because it functionally is synchronous locally.  Failed awaited operations throw exceptions instead of using an Error or onRejected handler, so you just wrap the awaited operation in a try/catch block to handle failures.
 
 ### Example
 Fire and forget chained file reads/prints
