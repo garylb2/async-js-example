@@ -23,7 +23,16 @@ const readFile = util.promisify(fs.readFile);
 With _util.promisify_, you take a function that has a callback as its last parameter and wrap it in a Promise instead.
 
 ## Promises
+With JavaScript ES6 standard, a standardized Promise object/behavior was introduced.  Node.js having basic support for such since v0.12.
+
+### Definitions
+A Promise is a wrapper/proxy object, around a segment of asynchronous code, which provides a state machine that tracks the status of the wrapped operation and a Monad design pattern which allows for chained handlers of success/failure.
+
+### Limitations
 ...
 
+### Warning
+Given the length of time required before browsers & Node.js implemented the ES6 standard, a number of independent developers created their own solution to avoid the **Callback Hell**.  Libraries, such as Blackbird Promises, have signficant differences from the standardized Promise objects and are generally not compatible with the newer standard.
+
 ## async/await
-...
+The latest asynchronous pattern in JavaScript & Node.js is the _async/await_ keywords.  Supported in Node.js as of _v7.6.0_.  Using the _async_ keyword before a function definition translates that Function into an [AsyncFunction](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction) which provides an implicit Promise return value, wrapping any explicit return in said Promise.
