@@ -27,7 +27,7 @@ With _util.promisify_, you take a function that has a callback as its last param
 With JavaScript ES6 standard, a standardized Promise object/behavior was introduced.  Node.js having basic support for such since _v0.12_.
 
 ### Definitions
-A Promise is a wrapper/proxy object, around a segment of asynchronous code, which provides a state machine that tracks the status of the wrapped operation and a [Monad design pattern](#Monad Design Pattern) which allows for chained handlers of success/failure.
+A Promise is a wrapper/proxy object, around a segment of asynchronous code, which provides a state machine that tracks the status of the wrapped operation and a [Monad design pattern](#monad-design-pattern) which allows for chained handlers of success/failure.
 
 ### Limitations
 The main limitation of the ES6 Promise, in my opinion, is readability.  Most implementations require anonymous callback functions inside of the Promise declaration, which is very different from synchronous code.  It can be difficult to follow the flow of control through all of the Monads, and depending how the handlers are attached to the Promise, you can have [unexpected behavior](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then#Chaining).
@@ -101,7 +101,7 @@ const printContents = async(rootFileName) => {
 printContents('./context.json');
 ```
 
-###### Footnotes
-####### Monad Design Pattern
+##### Footnotes
+###### Monad Design Pattern
 Fundamentally a Monad is an object that has methods which return an object with the same interface as the original Monad, but with a mutated internal state.
 One major JS example being jQuery objects.
