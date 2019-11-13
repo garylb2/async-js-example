@@ -10,4 +10,5 @@ If a developer thinks about calling web requests (or any fundamentally async ope
 
 For example, if you make a call that is async but do not wait for the response, the result will be undefined or incorrect with undesired behavior.  If you write the code to wait for the response, but block all other execution that could be happening at the same time, you'll be wasting precious execution time.
 
+## Visuals
 ![SyncVsAsync Diagram](images/SyncVsAsync.png)

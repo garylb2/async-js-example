@@ -8,4 +8,9 @@ When consuming data from an API with follow-up requests, you can often end up ma
 
 To minimize both, you can specify a concurrency limit for any collection of requests.
 
+N.B.: Use a library to impose concurrency limits, as the required code is complicated and arcane (and other people have already made robust libraries).
+
+## Visuals
+`The example below assumes that you have a set of 6 asynchronous operations that are invoked at the same time, but with different concurrency limits.`
+
 ![Concurrency Limit Diagram](images/Concurrency.png)
