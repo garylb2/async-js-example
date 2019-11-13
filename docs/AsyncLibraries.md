@@ -13,7 +13,7 @@ Can also be used in both Node.js & browser packages.
 ## sindresorhus Promise Libraries
 A series of smaller libraries for controlling the operational flow of async methods and collate the results of such.
 
-[](https://github.com/sindresorhus/promise-fun)
+[sindresorhus Promise Libraries](https://github.com/sindresorhus/promise-fun)
 
 ## Etc.
 There's a ton of others that could be used, but be careful to ensure the correctness of library functionality.
