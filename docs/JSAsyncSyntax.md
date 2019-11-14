@@ -3,8 +3,8 @@
 Over the course of the history of JavaScript, there have been three major methods of consuming the results of asynchronous code.
 _N.B.: Node.js and every other JS interpreter is single-threaded, and all asynchronous behavior is done with context switching of the single thread._
 
-## CallBacks
-The oldest, most venerable method of handling asynchronous behavior in Javascript is the usage of callbacks.  A callback function reference is passed as a parameter to another function that initiates the asynchronous operation and which invokes the callback function with expected result parameters (usually _(err, result)_).
+## Callbacks
+The oldest, most venerable method of handling asynchronous behavior in JavaScript is the usage of callbacks.  A callback function reference is passed as a parameter to another function that initiates the asynchronous operation and which invokes the callback function with expected result parameters (usually _(err, result)_).
 
 The vast majority of Node.js Library functions use the callback pattern for async, such as [fs.readFile](https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback) or [agent.createConnection](https://nodejs.org/api/http.html#http_agent_createconnection_options_callback).
 
@@ -12,7 +12,7 @@ The vast majority of Node.js Library functions use the callback pattern for asyn
 The main limitation of the callback pattern is **Callback Hell**.  Where when you want to do a series of chained asynchronous operations (where a follow-up operation is dependent on a previous one), you have to create either an ever more indented block of code or you have to pass callback functions further and further through different function invocations.
 
 ### Library Modernization
-Since the Node.js Library functions use the callback pattern, if you want to use them with the more modern patterns, you must modernize them with the following bit of code.
+Since the Node.js Library functions use the callback pattern, if you want to use them with the more modern patterns, you can easily modernize them with the following bit of code.
 
 ```javascript 1.6
 const util = require('util');
@@ -32,7 +32,7 @@ A Promise is a wrapper/proxy object, around a segment of asynchronous code, whic
 ### Limitations
 The main limitation of the ES6 Promise, in my opinion, is readability.  Most implementations require anonymous callback functions inside of the Promise declaration, which is very different from synchronous code.  It can be difficult to follow the flow of control through all of the Monads, and depending how the handlers are attached to the Promise, you can have [unexpected behavior](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then#Chaining).
 
-Promises are eager execution, so if you invoke a promise, it will immediately attempt to perform the contained behavior.  If such behavior isn't account for, such eagerness can lead to rate limiting on APIs or excessive memory usage or any number of undesired results.
+Promises are eager execution, so if you invoke a Promise, it will immediately attempt to perform the contained behavior.  If such behavior isn't account for, such eagerness can lead to rate limiting on APIs or excessive memory usage or any number of undesired results.
 
 ### Example
 Fire and forget chained file reads/prints
@@ -41,10 +41,15 @@ const util = require('util');
 const fs = require('fs');
 const readFile = util.promisify(fs.readFile);
 
-readFile('./context.json').then((results) => {
-    console.debug(results);
-    const data = JSON.parse(results);
-
+readFile('./context.json')
+  .then((results) => {
+      console.debug(results);
+      const data = JSON.parse(results);
+      return data;
+    }, (err) => {
+        console.error(`Read File Error: ${err}`);
+    }
+  ).then((data) => {
     for (const fName in data) {
       readFile(fName).then(fContents => {
         console.log(`${fName} -- ${fContents}`);
@@ -52,11 +57,7 @@ readFile('./context.json').then((results) => {
         console.error(`Error reading ${fName}: ${fErr}`);
       });
     }
-  },
-  (err) => {
-      console.error(`Read File Error: ${err}`);
-  }
-);
+  });
 ```
 
 ##### Why Use util.promisfy
@@ -103,7 +104,7 @@ const printContentHelper = async (fileName) => {
   }
 };
 
-const printContents = async(rootFileName) => {
+const printContents = async (rootFileName) => {
   try{
     const fileResults = await readFile();
 
