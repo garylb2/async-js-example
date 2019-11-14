@@ -8,9 +8,9 @@ When consuming data from an API with follow-up requests, you can often end up ma
 
 To minimize both, you can specify a concurrency limit for any collection of requests.
 
-N.B.: Use a library to impose concurrency limits, as the required code is complicated and arcane (and other people have already made robust libraries).
+N.B.: Use a [library](AsyncLibraries.md) to impose concurrency limits, as the required code is [complicated and arcane](https://github.com/sindresorhus/p-limit/blob/master/index.js) (and other people have already made robust libraries).
 
 ## Visuals
-`The example below assumes that you have a set of 6 asynchronous operations that are invoked at the same time, with the results of using different concurrency limits.`
+The following example below assumes that you have a set of 6 asynchronous operations that are invoked at the same time, with the results of using different concurrency limits.
 
 ![Concurrency Limit Diagram](images/Concurrency.png)

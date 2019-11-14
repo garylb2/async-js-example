@@ -42,21 +42,37 @@ const fs = require('fs');
 const readFile = util.promisify(fs.readFile);
 
 readFile('./context.json').then((results) => {
-        console.debug(results);
-        const data = JSON.parse(results);
+    console.debug(results);
+    const data = JSON.parse(results);
 
-        for (const fName in data) {
-          readFile(fName).then(fContents => {
-            console.log(`${fName} -- ${fContents}`);
-          }, fErr => {
-            console.error(`Error reading ${fName}: ${fErr}`);
-          });
-        }
-    },
-    (err) => {
-        console.error(`Read File Error: ${err}`);
+    for (const fName in data) {
+      readFile(fName).then(fContents => {
+        console.log(`${fName} -- ${fContents}`);
+      }, fErr => {
+        console.error(`Error reading ${fName}: ${fErr}`);
+      });
     }
+  },
+  (err) => {
+      console.error(`Read File Error: ${err}`);
+  }
 );
+```
+
+readFile Promise generator w/o promisify to demonstrate why you should just use promisfy when you can.
+```javascript 1.6
+const fs = require('fs');
+const readFile = (fileName) => {
+  return new Promise((resolve, reject) => {
+      fs.readFile(fileName, (err, results) => {
+        if(err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+  });
+};
 ```
 
 ### Warning
