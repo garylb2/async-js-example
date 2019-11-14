@@ -59,10 +59,13 @@ readFile('./context.json').then((results) => {
 );
 ```
 
+##### Why Use util.promisfy
 readFile Promise generator w/o promisify to demonstrate why you should just use promisfy when you can.
 ```javascript 1.6
 const fs = require('fs');
 const readFile = (fileName) => {
+  // resolve is the callback that matches up with the onFullfilled event handler
+  // reject is the callback that matches up with onRejected event handler
   return new Promise((resolve, reject) => {
       fs.readFile(fileName, (err, results) => {
         if(err) {
@@ -74,6 +77,7 @@ const readFile = (fileName) => {
   });
 };
 ```
+[executable version](../examples/fsTest.js)
 
 ### Warning
 Given the length of time required before browsers & Node.js implemented the ES6 standard, a number of independent developers created their own solution to avoid the **Callback Hell**.  Libraries, such as Blackbird Promises or Q, can have significant differences from the standardized Promise objects and are not guaranteed to be compatible with the newer ES6 standard.
