@@ -29,7 +29,7 @@ const _accumulateLimit = (coll, concurrency, promiseFunc) => {
   });
 
   return promiseResponse;
-}
+};
 
 // returns a promise
 const retryableRequestGet = function(options) {
@@ -57,7 +57,7 @@ const getEmployeeData = (employeeData) => {
   const urlOptions = {
     url: `${serverUrl}/employee/${employeeData.id}`,
     json: true
-  }
+  };
 
   const employeeDataPromise = new Promise((resolve,reject) => {
     retryableRequestGet(urlOptions)
@@ -74,7 +74,7 @@ const getAllEmployees = () => {
   const urlOptions = {
     url: `${serverUrl}/employees`,
     json: true
-  }
+  };
 
   const allEmployeesPromise = new Promise((resolve,reject) => {
     retryableRequestGet(urlOptions)
@@ -92,7 +92,7 @@ const getTeamData = (teamData) => {
   const urlOptions = {
     url: `${serverUrl}/team/${teamData.id}`,
     json: true
-  }
+  };
 
   const teamDataPromise = new Promise((resolve,reject) => {
     retryableRequestGet(urlOptions)
@@ -109,7 +109,7 @@ const getAllTeams = () => {
   const urlOptions = {
     url: `${serverUrl}/teams`,
     json: true
-  }
+  };
 
   const allTeamsPromise = new Promise((resolve,reject) => {
     retryableRequestGet(urlOptions)
@@ -162,6 +162,6 @@ exports.getReport = () => {
 
       console.log(teamSalaries);
     });
-}
+};
 
 exports.getReport();

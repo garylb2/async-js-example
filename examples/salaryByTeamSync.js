@@ -17,7 +17,7 @@ const getEmployeeData = (employeeData) => {
   const urlOptions = {
     url: `${serverUrl}/employee/${employeeData.id}`,
     json: true
-  }
+  };
 
   const rawEmployeeData = requestGet(urlOptions);
 
@@ -28,7 +28,7 @@ const getAllEmployees = () => {
   const urlOptions = {
     url: `${serverUrl}/employees`,
     json: true
-  }
+  };
 
   const rawEmployeesData = requestGet(urlOptions);
   const employeesData = JSON.parse(rawEmployeesData);
@@ -45,7 +45,7 @@ const getTeamData = (teamData) => {
   const urlOptions = {
     url: `${serverUrl}/team/${teamData.id}`,
     json: true
-  }
+  };
 
   const rawTeamData = requestGet(urlOptions);
   const parsedTeamData = JSON.parse(rawTeamData);
@@ -57,7 +57,7 @@ const getAllTeams = () => {
   const urlOptions = {
     url: `${serverUrl}/teams`,
     json: true
-  }
+  };
 
   const rawTeamsData = requestGet(urlOptions);
   const teamsData = JSON.parse(rawTeamsData);
@@ -100,6 +100,6 @@ exports.getReport = () => {
   console.log(`# of API calls: ${numOfCalls}`);
 
   console.log(teamSalaries);
-}
+};
 
 exports.getReport();

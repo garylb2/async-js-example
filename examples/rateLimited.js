@@ -51,7 +51,7 @@ const retryableRequestGet = async function(options) {
             const ret = {statusCode: response.statusCode, body: response.body};
             // console.log('retryableRequestGet simplified response', ret);
             return ret;
-        })
+        });
 };
 
 const get = async (options) => {
@@ -76,7 +76,7 @@ const getEmployeeData = async (employeeData) => {
   const urlOptions = {
     url: `${serverUrl}/employee/${employeeData.id}`,
     json: true
-  }
+  };
 
   const rawEmployeeData = await get(urlOptions);
 
@@ -87,7 +87,7 @@ const getAllEmployees = async () => {
   const urlOptions = {
     url: `${serverUrl}/employees`,
     json: true
-  }
+  };
 
   const rawEmployeesData = await get(urlOptions);
   const concatData = await concatLimit(rawEmployeesData.body, concurrency, getEmployeeData);
@@ -107,6 +107,6 @@ exports.getReport = async () => {
   console.log(`# of API calls: ${numOfCalls}`);
 
   console.log(employeesData);
-}
+};
 
 exports.getReport();

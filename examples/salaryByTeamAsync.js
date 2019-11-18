@@ -31,14 +31,14 @@ const retryableRequestGet = async function(options) {
             const ret = {statusCode: response.statusCode, body: response.body};
             // console.log('retryableRequestGet simplified response', ret);
             return ret;
-        })
+        });
 };
 
 const getEmployeeData = async (employeeData) => {
   const urlOptions = {
     url: `${serverUrl}/employee/${employeeData.id}`,
     json: true
-  }
+  };
 
   const rawEmployeeData = await retryableRequestGet(urlOptions);
 
@@ -49,7 +49,7 @@ const getAllEmployees = async () => {
   const urlOptions = {
     url: `${serverUrl}/employees`,
     json: true
-  }
+  };
 
   const rawEmployeesData = await retryableRequestGet(urlOptions);
   const concatData = await concatLimit(rawEmployeesData.body, concurrency, getEmployeeData);
@@ -61,7 +61,7 @@ const getTeamData = async (teamData) => {
   const urlOptions = {
     url: `${serverUrl}/team/${teamData.id}`,
     json: true
-  }
+  };
 
   const rawTeamData = await retryableRequestGet(urlOptions);
 
@@ -72,7 +72,7 @@ const getAllTeams = async () => {
   const urlOptions = {
     url: `${serverUrl}/teams`,
     json: true
-  }
+  };
 
   const rawTeamsData = await retryableRequestGet(urlOptions);
   const concatData = await concatLimit(rawTeamsData.body, concurrency, getTeamData);
@@ -113,6 +113,6 @@ exports.getReport = async () => {
   console.log(`# of API calls: ${numOfCalls}`);
 
   console.log(teamSalaries);
-}
+};
 
 exports.getReport();
